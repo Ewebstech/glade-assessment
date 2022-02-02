@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class SuperAdminSeeder extends Seeder
 {
@@ -15,8 +16,8 @@ class SuperAdminSeeder extends Seeder
     {
         DB::table('users')->insert([
             'name' => 'Superadmin',
-            'email' => Str::random(10).'@gmail.com',
-            'password' => Hash::make('password'),
+            'email' => 'superadmin@gmail.com',
+            'password' => \Hash::make('password'),
             'role' => 'superadmin'
         ]);
     }
