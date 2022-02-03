@@ -47,16 +47,16 @@ class User extends Authenticatable
      *
      * @param array[]
      */
-    protected function createUser($params){
+    public function createUser($params){
         $data = [
             'name' => ucfirst(strtolower($params['name'])),
             'email' => $params['email'],
             'password' => $params['password'],
-            'role' => $params['role']
+            'role' => $params['role'],
         ];
 
-        $saveData = $this->create($data);
-        return ($saveData) ? true : false;
+        $saveData = $this->updateOrCreate(['email' => $params['email']], $data);
+        return ($saveData) ? $saveData : false;
     }
 
     /**
@@ -71,7 +71,7 @@ class User extends Authenticatable
     /**
      * Fetch ALL data
      */
-    protected function getAllUsers(){
+    public function getAllUsers(){
         $data = $this->all();
         return ($data) ? $data : false;
     }
@@ -79,7 +79,7 @@ class User extends Authenticatable
     /**
      * @param array[]
      */
-    protected function updateUser($params){
+    public function updateUser($params){
         $role = $params['role'] == 'superadmin' ? 'admin' : $params['role']; // Ensure superadmin is not created twice!
         $update = [
             'name' => ucfirst(strtolower($params['name'])),
@@ -94,7 +94,7 @@ class User extends Authenticatable
     /**
      * @param email
      */
-    protected function deleteAdminUser($param){
+    public function deleteUser($param){
         $updated = $this->where('email', $param)->delete();
         return ($updated) ? true : false;
     }

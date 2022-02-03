@@ -9,29 +9,43 @@ class Employees extends Model
 {
     use HasFactory;
 
+     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'firstname',
+        'email',
+        'password',
+        'lastname',
+        'company',
+        'phone',
+
+    ];
+
     /**
      * Fetch SINGLE employee's data
      * @param email
      */
-    protected function createEmployee($params){
+    public function createEmployee($params){
         $data = [
             'firstname' => ucfirst(strtolower($params['firstname'])),
             'lastname' => ucfirst(strtolower($params['lastname'])),
             'email' => $params['email'],
-            'role' => $params['role'],
             'phone' => $params['phone'],
             'company' => $params['companyId']
         ];
 
-        $saveData = $this->create($data);
-        return ($saveData) ? true : false;
+        $saveData = $this->updateOrCreate(['email' => $data['email']], $data);
+        return ($saveData) ? $saveData : false;
     }
 
     /**
      * Fetch SINGLE employee's data
      * @param email
      */
-    protected function getEmployee($param){
+    public function getEmployee($param){
         $data = $this->where('email', $param)->first();
         return ($data) ? $data : false;
     }
@@ -39,15 +53,23 @@ class Employees extends Model
     /**
      * Fetch ALL Employee's data
      */
-    protected function getAllEmployees(){
+    public function getAllEmployees(){
         $data = $this->all();
+        return ($data) ? $data : false;
+    }
+
+    /**
+     * Fetch ALL Employee's data
+     */
+    public function getAllEmployeesByCompany($companyId){
+        $data = $this->where('company', $companyId)->paginate(10);
         return ($data) ? $data : false;
     }
 
     /**
      * @param array[]
      */
-    protected function updateEmployee($params){
+    public function updateEmployee($params){
         $update = [
             'firstname' => $params['firstname'],
             'lastname' => $params['lastname'],
@@ -61,7 +83,7 @@ class Employees extends Model
     /**
      * @param email
      */
-    protected function deleteEmployee($param){
+    public function deleteEmployee($param){
         $updated = $this->where('email', $param)->delete();
         return ($updated) ? true : false;
     }

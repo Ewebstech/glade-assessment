@@ -20,3 +20,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::post('/login', 'App\Http\Controllers\Authentication@Login');
+
+Route::group(['prefix' => '/', 'middleware' => ['jwt-auth']], function(){
+    Route::post('/create-account', 'App\Http\Controllers\AccountsController@createAccount');
+    Route::post('/delete-account', 'App\Http\Controllers\AccountsController@deleteAccount');
+
+    Route::get('/view-companies', 'App\Http\Controllers\CompanyController@viewCompanies');
+    Route::get('/view-employees', 'App\Http\Controllers\EmployeeController@viewEmployees');
+
+
+});

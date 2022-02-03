@@ -14,7 +14,7 @@ Trait Response {
         ], $httpCode);
     }
 
-    public static function success($msg, $httpCode, $data = []) {
+    public function success($msg, $httpCode, $data = []) {
         return response()->json([
             'status' => true,
             'http_code' => $httpCode,

@@ -10,17 +10,34 @@ class RequestRules
             'email' => 'required|email',
             'password' => 'required|string'
         ],
-        'UPDATE_PROFILE' => [
-            //validation rules
-            'firstname' => 'nullable',
+        'CREATE_ADMIN_ACCOUNT' => [
+            'firstname' => 'required|string',
             'lastname' => 'nullable',
-            'email' => 'email|required',
-            'phonenumber' => 'required',
-            'avatar' => 'nullable',
-            'gender' => 'required',
-            'role' => 'required',
-            'password' => 'nullable'
+            'email' => 'required|email',
+            'role' => 'required|string',
+            'password' => 'required|string'
         ],
+        'CREATE_COMPANY_ACCOUNT' => [
+            'firstname' => 'required|string',
+            'lastname' => 'nullable',
+            'email' => 'required|email',
+            'role' => 'required|string',
+            'password' => 'required|string',
+            'logo' => 'required|string',
+            'website' => 'required|string'
+        ],
+         'CREATE_EMPLOYEE_ACCOUNT' => [
+            'firstname' => 'required|string',
+            'lastname' => 'nullable',
+            'email' => 'required|email',
+            'role' => 'required|string',
+            'password' => 'required|string',
+            'phone' => 'required|string',
+            'companyId' => 'required'
+        ],
+        'DELETE_ACCOUNT' => [
+            'email' => 'required'
+        ]
 
     ];
 

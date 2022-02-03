@@ -9,27 +9,41 @@ class Companies extends Model
 {
     use HasFactory;
 
+     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name',
+        'email',
+        'logo',
+        'website',
+        'creator'
+    ];
+
     /**
      *
      * @param $params
      */
-    protected function createCompany($params){
+    public function createCompany($params){
         $data = [
             'name' => ucfirst(strtolower($params['name'])),
             'email' => $params['email'],
             'logo' => $params['logo'],
-            'website' => $params['website']
+            'website' => $params['website'],
+            'creator' => $params['creator']
         ];
 
-        $saveData = $this->create($data);
-        return ($saveData) ? true : false;
+        $saveData = $this->updateOrCreate(['email' => $data['email']], $data);
+        return ($saveData) ? $saveData : false;
     }
 
     /**
      * Fetch SINGLE company's data
      * @param email
      */
-    protected function getCompany($param){
+    public function getCompany($param){
         $data = $this->where('email', $param)->first();
         return ($data) ? $data : false;
     }
@@ -37,7 +51,7 @@ class Companies extends Model
     /**
      * Fetch ALL Employee's data
      */
-    protected function getAllCompanies(){
+    public function getAllCompanies(){
         $data = $this->all();
         return ($data) ? $data : false;
     }
@@ -45,7 +59,7 @@ class Companies extends Model
     /**
      * @param array[]
      */
-    protected function updateCompany($params){
+    public function updateCompany($params){
         $update = [
             'name' => $params['name'],
             'website' => $params['webiste'],
@@ -59,7 +73,7 @@ class Companies extends Model
     /**
      * @param email
      */
-    protected function deleteEmployee($param){
+    public function deleteCompany($param){
         $updated = $this->where('email', $param)->delete();
         return ($updated) ? true : false;
     }
