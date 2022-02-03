@@ -42,4 +42,60 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     *
+     * @param array[]
+     */
+    protected function createUser($params){
+        $data = [
+            'name' => ucfirst(strtolower($params['name'])),
+            'email' => $params['email'],
+            'password' => $params['password'],
+            'role' => $params['role']
+        ];
+
+        $saveData = $this->create($data);
+        return ($saveData) ? true : false;
+    }
+
+    /**
+     * Fetch SINGLE data
+     * @param email
+     */
+    public function getUser($param){
+        $data = $this->where('email', $param)->first();
+        return ($data) ? $data : false;
+    }
+
+    /**
+     * Fetch ALL data
+     */
+    protected function getAllUsers(){
+        $data = $this->all();
+        return ($data) ? $data : false;
+    }
+
+    /**
+     * @param array[]
+     */
+    protected function updateUser($params){
+        $role = $params['role'] == 'superadmin' ? 'admin' : $params['role']; // Ensure superadmin is not created twice!
+        $update = [
+            'name' => ucfirst(strtolower($params['name'])),
+            'password' => $params['password'],
+            'role' => $role
+        ];
+
+        $updated = $this->where('email', $params['email'])->update($update);
+        return ($updated) ? true : false;
+    }
+
+    /**
+     * @param email
+     */
+    protected function deleteAdminUser($param){
+        $updated = $this->where('email', $param)->delete();
+        return ($updated) ? true : false;
+    }
 }

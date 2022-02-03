@@ -11,7 +11,8 @@ class HttpStatusCodes {
         FORBIDDEN = 403,
         NOT_FOUND = 404,
         BAD_REQUEST = 400,
-        NOT_MODIFIED = 304;
-        
+        NOT_MODIFIED = 304,
+        SERVER_ERROR = 500;
+
 
 }

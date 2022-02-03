@@ -13,13 +13,14 @@ class Employees extends Model
      * Fetch SINGLE employee's data
      * @param email
      */
-    protected function createEmployee($param){
+    protected function createEmployee($params){
         $data = [
             'firstname' => ucfirst(strtolower($params['firstname'])),
             'lastname' => ucfirst(strtolower($params['lastname'])),
             'email' => $params['email'],
             'role' => $params['role'],
-            'phone' => $params['phone']
+            'phone' => $params['phone'],
+            'company' => $params['companyId']
         ];
 
         $saveData = $this->create($data);
